@@ -34,14 +34,9 @@ class Genre(models.Model):
 
 
 class CinemaHall(models.Model):
-    name = models.CharField(max_length=255)
-    rows = models.IntegerField(default=0)
-    seats_in_row = models.IntegerField(default=0)
+    name = models.CharField(max_length=70)
+    rows = models.IntegerField()
+    seats_in_row = models.IntegerField()
 
-    class Meta:
-        ordering = ["name"]
-        verbose_name_plural = "cinemaHalls"
-
-    def __str__(self):
-        return (f"Movie: {self.name} "
-                f"(rows: {self.rows}, seats: {self.seats_in_row})")
+    def __str__(self) -> str:
+        return self.name
