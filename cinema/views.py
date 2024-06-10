@@ -92,6 +92,13 @@ class ActorDetail(generics.GenericAPIView,
         return self.partial_update(request, *args, **kwargs)
 
 
-class CinemaHallViewSet(viewsets.ModelViewSet):
+class CinemaHallViewSet(
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+):
     queryset = CinemaHall.objects.all()
     serializer_class = CinemaHallSerializer
