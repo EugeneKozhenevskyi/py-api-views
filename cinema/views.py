@@ -49,6 +49,13 @@ class GenreDetail(APIView):
         self.get_object(pk=pk).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    def patch(self, request, pk: int) -> Response:
+        serializer = GenreSerializer(self.get_object(pk=pk), data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ActorList(generics.GenericAPIView,
                 mixins.ListModelMixin,
@@ -78,6 +85,9 @@ class ActorDetail(generics.GenericAPIView,
 
     def delete(self, request, *args, **kwargs) -> Response:
         return self.destroy(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs) -> Response:
+        return self.partial_update(request, *args, **kwargs)
 
 
 class CinemaHallViewSet(viewsets.ModelViewSet):
